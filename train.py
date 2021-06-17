@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     style_name = args.style_image.split("/")[-1].split(".")[0]
     os.makedirs(f"images/outputs/{style_name}-training", exist_ok=True)
-    os.makedirs(f"checkpoints", exist_ok=True)
+    os.makedirs(f"checkpoints/{style_name}", exist_ok=True)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -125,5 +125,4 @@ if __name__ == "__main__":
                 save_sample(batches_done)
 
             if args.checkpoint_interval > 0 and batches_done % args.checkpoint_interval == 0:
-                style_name = os.path.basename(args.style_image).split(".")[0]
-                torch.save(transformer.state_dict(), f"checkpoints/{style_name}_{batches_done}.pth")
+                torch.save(transformer.state_dict(), f"checkpoints/{style_name}/{style_name}_{batches_done}.pth")
